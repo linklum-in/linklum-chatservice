@@ -16,6 +16,10 @@ app.use(cors({
 app.use(express.json({}));
 app.use(express.urlencoded({extended:true}));
 
+app.get('/' , (req,res) => {
+    return res.send("Welcome to Alumni Portal Chat Microservice")
+})
+
 
 try {
     mongoose.connect(process.env.MONGODB_URI);
@@ -23,6 +27,7 @@ try {
 } catch (error) {
     console.error('Error connecting to MongoDB:', error.message);
 }
+
 
 
 const PORT = process.env.PORT || 4000;
