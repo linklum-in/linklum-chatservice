@@ -4,6 +4,7 @@ import express from "express";
 import http from "http";
 import mongoose from "mongoose"
 import cors from "cors"
+import { connectDatabases } from "./src/db/connection.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -16,19 +17,22 @@ app.use(cors({
 app.use(express.json({}));
 app.use(express.urlencoded({extended:true}));
 
+const PORT = process.env.PORT || 4000;
+
+// connecting databases =>
+try {
+   connectDatabases()
+   .then((res) => {
+    server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+   })
+   .catch((err) => {
+    console.log(err)
+   })
+} catch (error) {
+    console.error('Error in Connection', error.message);
+}
+
 app.get('/' , (req,res) => {
     return res.send("Welcome to Alumni Portal Chat Microservice")
 })
 
-
-try {
-    mongoose.connect(process.env.MONGODB_URI);
-    console.log('MongoDB connected successfully');
-} catch (error) {
-    console.error('Error connecting to MongoDB:', error.message);
-}
-
-
-
-const PORT = process.env.PORT || 4000;
-server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
