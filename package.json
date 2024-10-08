@@ -1,0 +1,19 @@
+{
+  "name": "alumni-portal-chat",
+  "version": "1.0.0",
+  "description": "microservice for chat of alumni portal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhaykantmishra/alumni-portal-chatservice-backend.git"
+  },
+  "author": "abhaykantmishra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhaykantmishra/alumni-portal-chatservice-backend/issues"
+  },
+  "homepage": "https://github.com/abhaykantmishra/alumni-portal-chatservice-backend#readme"
+}
