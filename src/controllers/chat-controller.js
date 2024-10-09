@@ -7,30 +7,30 @@ import mongoose from "mongoose"
 
 export async function createChat(req,res){
     try {
-        const {username1, username2} = req.body;
-        console.log(username1,username2)
+        const {userId1, userId2} = req.body;
+        console.log(userId1,userId2)
 
-        if(!(username1?.trim()) || !(username2?.trim())){
+        if(!(userId1?.trim()) || !(userId2?.trim())){
             return res.status(400).json({
                 message:"Provide all required field!"
             })
         }
 
-        const User1 = await User.findOne({username:username1});
+        const User1 = await User.findById(userId1);
         if(!User1){
             return res.status(404).json({
-                message:"Provide correct username1 field!"
+                message:"Provide correct userId1 field!"
             })
         }
 
-        const User2 = await User.findOne({username:username2});
+        const User2 = await User.findById(userId2);
         if(!User2){
             return res.status(404).json({
-                message:"Provide correct username2 field!"
+                message:"Provide correct userId2 field!"
             })
         }
 
-        console.log(User1 , User2);
+        // console.log(User1 , User2);
 
         const chatId1 = `${User1._id}${User2._id}`;
         const chatId2 = `${User2._id}${User1._id}`;
@@ -48,13 +48,14 @@ export async function createChat(req,res){
         }
 
         // console.log(User1._id , User2._id)
+        console.log(String(User1.name), User2);
 
         const newChat = new Chat({
             chatId:chatId1,
             userId1:User1._id,
             userId2:User2._id,
-            username1:username1,
-            username2:username2,
+            username1:User1.name,
+            username2:User2.name,
             allMessages: [],
             lastMessage:""
         })
@@ -64,26 +65,6 @@ export async function createChat(req,res){
         if(!createdChat){
             return res.status(500).json({
                 message:"Something went wrong while creating a new chat!"
-            })
-        }
-
-        // adding in connectedUser
-        const userId1 = new mongoose.Types.ObjectId(User1._id);
-        const userId2 = new mongoose.Types.ObjectId(User2._id);
-
-        const updateUser1 = await User.findByIdAndUpdate(User1._id,
-            {$push : {connectedUsers:User2._id }},
-            {new:true}
-        )
-
-        const updateUser2 = await User.findByIdAndUpdate(User2._id,
-            {$push : {connectedUsers:User1._id }},
-            {new:true}
-        )
-
-        if(!updateUser1 || !updateUser2){
-            return res.status(500).json({
-                message:"Something went wrong while creating a new chat between two users!",
             })
         }
 
@@ -101,7 +82,7 @@ export async function createChat(req,res){
     }
 }
 
-export async function updateChatByChatId({chatId , message , sender}){
+export async function updateChatById({chatId , message , sender}){
     try {
         // const {chatId , message , sender} = req.body;
 
@@ -144,16 +125,16 @@ export async function updateChatByChatId({chatId , message , sender}){
 
 export async function getUserChats(req,res){
     try {
-        const {username} = req.body;
+        const {userId} = req.body;
 
 
-        if(!(username?.trim())){
+        if(!(userId?.trim())){
             return res.status(400).json({
                 message:"Provide username"
             })
         }
 
-        const user = await User.findOne({username:username});
+        const user = await User.findById(userId);
         if(!user){
             return res.status(404).json({
                 message:"Provide correct username field!"
@@ -162,8 +143,8 @@ export async function getUserChats(req,res){
 
         const userChats = await Chat.find({
             $or: [
-                { username1: username },
-                { username2: username }
+                { userId1: user._id },
+                { userId2: user._id }
             ]
         })
 

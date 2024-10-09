@@ -1,33 +1,69 @@
 import mongoose, {Schema} from "mongoose";
 
+
+
 const userSchema = new Schema(
     {
-        username:{
-            type:String,
-            unique:true,
-            required:true,
-        },
         email:{
             type:String,
-            unique:true,
+            required:true,
+            // unique:true
+        },
+        name:{
+            type:String,
             required:true,
         },
         password:{
             type:String,
             required:true,
         },
-        connectedUsers:[{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"User",
-        }],
-        groups:[
+        contactNumber:{
+            type:String,
+        },
+        collegeName:{
+            type:String,
+            required:true,
+        },
+        profileImage:{
+            type:String,
+        },
+        location:{
+            type:String
+        },
+        roll:{
+            type:String
+        },
+        branch:{
+            type:String,
+        },
+        state:{
+            type:String,
+        },
+        batch:{
+            type:String,
+        },
+        companyName:{
+            type:String,
+        },
+        jobTitle:{
+            type:String,
+        },
+        connectedUsers:[
             {
                 type:mongoose.Types.ObjectId,
-                ref:"Groupchat"
+                ref:"User",
+            }
+        ],
+        invitations:[
+            {
+                type:mongoose.Types.ObjectId,
+                ref:"User",
             }
         ]
     },
-    {timestamps : true}
+    {
+        timestamps:true
+    }
 )
 
 // const User = mongoose.model("User", userSchema);

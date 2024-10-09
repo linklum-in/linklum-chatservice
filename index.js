@@ -39,8 +39,8 @@ const io = new Server(server, {
 
 initializeSocketIO(io)
 
-app.use('/api/chat' , chatRouter);
-app.use('/api/groupchat' , () => {})
+app.use('/chat' , chatRouter);
+app.use('/groupchat' , () => {})
   
 server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 

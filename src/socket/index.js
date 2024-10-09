@@ -1,5 +1,5 @@
 import { Server} from "socket.io";
-import { updateChatByChatId } from "../controllers/chat-controller.js";
+import { updateChatById } from "../controllers/chat-controller.js";
 // import { updateGroupChatById } from "./controllers/groupchat_controllers.js";
 
 export function initializeSocketIO (io) {
@@ -18,7 +18,7 @@ export function initializeSocketIO (io) {
                 // Broadcast message to everyone in the room (including sender)  
                 // console.log(isGroupChat);
                 if(isGroupChat === false){
-                    const chat = await updateChatByChatId({chatId:roomId, message:message , sender:fromUserName})
+                    const chat = await updateChatById({chatId:roomId, message:message , sender:fromUserName})
                     io.to(roomId).emit('receive_message', { message, fromUserId, fromUserName, updatedChat:chat, isGroupChat });
                 }
                 else if(isGroupChat === true){
