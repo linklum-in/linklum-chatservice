@@ -6,12 +6,12 @@ export function initializeSocketIO (io) {
     try {
         io.on("connection", (socket) => {
 
-            console.log("User connected");
-            console.log("ID:", socket.id)
+            // console.log("User connected");
+            // console.log("ID:", socket.id)
         
             socket.on('join_room', ({ roomId, userId }) => {
                 socket.join(roomId) // join a unique room
-                console.log(`user: ${userId} joined in room : ${roomId}`)
+                // console.log(`user: ${userId} joined in room : ${roomId}`)
             });
         
             socket.on('send_message', async ({ message, roomId, fromUserName, fromUserId, isGroupChat }) => {
@@ -29,7 +29,7 @@ export function initializeSocketIO (io) {
             });
         
             socket.on("disconnect", () => {
-                console.log(`user disconnected ${socket.id}`)
+                // console.log(`user disconnected ${socket.id}`)
             })
         })
     } catch (error) {
