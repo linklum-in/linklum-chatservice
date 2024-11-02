@@ -1,7 +1,7 @@
 import {Chat} from "../db/connection.js"
 import {User} from "../db/connection.js"
 import dayjs from "dayjs"
-import mongoose from "mongoose"
+import mongoose, { model } from "mongoose"
 
 
 
@@ -146,7 +146,7 @@ export async function getUserChats(req,res){
                 { userId1: user._id },
                 { userId2: user._id }
             ]
-        })
+        }).populate({path:"userId1", model:User ,select:"profileImage"}).populate({path:"userId2",model:User ,select:"profileImage"})
 
         return res.status(200).json({
             message: "all chats of user",

@@ -12,10 +12,10 @@ let Chat;
 export async function connectDatabases() {
     try {
         // Create connections for both databases
-        const userDbConnection = mongoose.createConnection(userDbUri);
+        const userDbConnection = mongoose.createConnection(userDbUri,{useNewUrlParser: true,useUnifiedTopology: true})
         console.log('User Database connected successfully');
 
-        const chatDbConnection = mongoose.createConnection(chatDbUri);
+        const chatDbConnection = mongoose.createConnection(chatDbUri,{useNewUrlParser: true,useUnifiedTopology: true})
         console.log('Chat Database connected successfully');
 
         // console.log("userDbConnectionResponse : ", userDbConnection)
