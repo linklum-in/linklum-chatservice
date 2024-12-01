@@ -146,7 +146,7 @@ export async function getUserChats(req,res){
                 { userId1: user._id },
                 { userId2: user._id }
             ]
-        }).populate({path:"userId1", model:User ,select:"profileImage"}).populate({path:"userId2",model:User ,select:"profileImage"})
+        }).populate({path:"userId1", model:User ,select:"profileImage"}).populate({path:"userId2",model:User ,select:"profileImage"}).select("-allMessages")
 
         return res.status(200).json({
             message: "all chats of user",
